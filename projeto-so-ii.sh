@@ -25,7 +25,7 @@ do
     echo ""
     echo "6 - [Criar um novo grupo]"
     echo ""
-    echo "7 - [Adicionar um usuário a um grupo]"
+    echo "7 - [Adicionar um usuário a um ou mais grupos]"
     echo ""
     echo "8 - [Remover um usuário de um grupo]"
     echo ""
@@ -135,11 +135,13 @@ do
         echo "Digite o nome do usuário que deseja inserir a um novo grupo"
         read userNome
         echo ""
-        echo "Digite o nome do grupo que deseja inserir o usuário"
+        echo "Digite o nome do grupo ou dos grupos que deseja inserir o usuário"
+        echo "(ex: grupo ou grupo1,grupo2)"
         read grupo
         echo ""
         #usermod -G <grupo> <usuario> para adidionar novo grupo e manter os outros
-        gpasswd -a $userNome $grupo
+        usermod -G $grupo $userNome
+        # gpasswd -a $userNome $grupo
         echo ""
         echo "-----------------------------------------------------------------------"
         echo "Grupos atuais do usuário"
