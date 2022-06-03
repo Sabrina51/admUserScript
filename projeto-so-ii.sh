@@ -53,7 +53,11 @@ do
         read userNome
         useradd $userNome
         echo ""
-        echo -e "\033[01;36mVoltando para o menu principal o/\033[01;37m"
+        id $userNome
+        echo ""
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        read
+        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
         echo ".."
         sleep 1
         echo "."
@@ -65,7 +69,9 @@ do
         read userNome
         passwd $userNome
         echo ""
-        echo -e "\033[01;36mVoltando para o menu principal o/\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        read
+        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
         echo ".."
         sleep 1
         echo "."
@@ -77,7 +83,9 @@ do
         read userNome
         usermod -L $userNome
         echo ""
-        echo -e "\033[01;36mVoltando para o menu principal o/\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        read
+        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
         echo ".."
         sleep 1
         echo "."
@@ -89,7 +97,9 @@ do
         read userNome
         usermod -U $userNome
         echo ""
-        echo -e "\033[01;36mVoltando para o menu principal o/\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        read
+        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
         echo ".."
         sleep 1
         echo "."
@@ -97,7 +107,8 @@ do
     echo "-----------------------------------------------------------------------"
     ;;
     5)
-        echo "Digite o nome do usuário que deseja adicionar nos grupos: audio, video e scanner"
+        echo "Digite o nome do usuário que deseja adicionar nos grupos: audio,"
+        echo "video e scanner"
         read userNome
         usermod -G audio,video,scanner $userNome
         echo ""
@@ -180,7 +191,7 @@ do
     9)
         echo "Digite o nome do usuário para definir expiração de senha no próximo login"
         read userNome
-        passwd -e $userNome
+        passwd --expire $userNome
         echo ""
         sudo chage -l $userNome
         echo ""
@@ -210,8 +221,7 @@ do
     echo "-----------------------------------------------------------------------"
     ;;
     11)
-        echo "Digite o nome do usuário do qual deseja definir a data de"
-        echo "expiração da conta."
+        echo "Digite o nome do usuário que deseja definir data de expiração da conta."
         read userNome
         echo ""
         echo "Digite a data de expiração no seguinte formato: AAAA/MM/DD"
