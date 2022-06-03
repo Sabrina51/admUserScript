@@ -210,12 +210,15 @@ do
     echo "-----------------------------------------------------------------------"
     ;;
     11)
-        echo "Digite o nome do usuário para definir expiração para o próximo dia"
-        date -d "1 day"
-        expiracao=$(date -d "1 day")
-        echo $expiracao
+        echo "Digite o nome do usuário do qual deseja definir a data de"
+        echo "expiração da conta."
         read userNome
-        change -M $expiracao $userNome
+        echo ""
+        echo "Digite a data de expiração no seguinte formato: AAAA/MM/DD"
+        read expira
+        # dia=$(date +%d)
+        # expira=$(date +%Y/%m)/0$((++DIA))
+        chage -E $expira $userNome
         echo ""
         sudo chage -l $userNome
         echo ""
@@ -247,6 +250,7 @@ do
     echo "-----------------------------------------------------------------------"
     ;;
     13)
+        echo ""
         echo -e "\033[01;31mSaindo...\033[01;37m"
         sleep 2
         clear;
