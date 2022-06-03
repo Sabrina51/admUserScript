@@ -35,9 +35,7 @@ do
     echo ""
     echo "11 - [Forçar usuário a trocar a senha no próximo dia]"
     echo ""
-    echo "12 - [Nova]"
-    echo ""
-    echo "13 - [Exit]"
+    echo "12 - [Exit]"
     echo ""
     echo "-----------------------------------------------------------------------"
 
@@ -55,12 +53,9 @@ do
         echo ""
         id $userNome
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
-        echo ".."
-        sleep 1
-        echo "."
+        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
@@ -69,12 +64,9 @@ do
         read userNome
         passwd $userNome
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
-        echo ".."
-        sleep 1
-        echo "."
+        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
@@ -83,12 +75,14 @@ do
         read userNome
         usermod -L $userNome
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        echo "-----------------------------------------------------------------------"
+        echo "Usuários ativos no sistema:"
+        echo "-----------------------------------------------------------------------"
+        passwd -S -a|awk '$2 ~ /P/ {print $q}'
+        echo ""
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
-        echo ".."
-        sleep 1
-        echo "."
+        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
@@ -97,18 +91,20 @@ do
         read userNome
         usermod -U $userNome
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        echo "-----------------------------------------------------------------------"
+        echo "Usuários ativos no sistema:"
+        echo "-----------------------------------------------------------------------"
+        passwd -S -a|awk '$2 ~ /P/ {print $q}'
+        echo ""
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
-        echo ".."
-        sleep 1
-        echo "."
+        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     5)
         echo "Digite o nome do usuário que deseja adicionar nos grupos: audio,"
-        echo "video e scanner"
+        echo "video e scanner."
         read userNome
         usermod -G audio,video,scanner $userNome
         echo ""
@@ -117,12 +113,9 @@ do
         echo "-----------------------------------------------------------------------"
         groups $userNome
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
-        echo ".."
-        sleep 1
-        echo "."
+        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
@@ -130,15 +123,11 @@ do
         echo "Digite o nome do grupo que deseja criar"
         read grupo
         echo ""
-        #usermod -G <grupo> <usuario> para adidionar novo grupo e manter os outros
         addgroup $grupo
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
-        echo ".."
-        sleep 1
-        echo "."
+        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
@@ -149,6 +138,7 @@ do
         echo "Digite o nome do grupo que deseja inserir o usuário"
         read grupo
         echo ""
+        #usermod -G <grupo> <usuario> para adidionar novo grupo e manter os outros
         gpasswd -a $userNome $grupo
         echo ""
         echo "-----------------------------------------------------------------------"
@@ -156,12 +146,9 @@ do
         echo "-----------------------------------------------------------------------"
         groups $userNome
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
-        echo ".."
-        sleep 1
-        echo "."
+        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
@@ -179,12 +166,9 @@ do
         echo "-----------------------------------------------------------------------"
         groups $userNome
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
-        echo ".."
-        sleep 1
-        echo "."
+        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
@@ -195,12 +179,9 @@ do
         echo ""
         sudo chage -l $userNome
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
-        echo ".."
-        sleep 1
-        echo "."
+        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
@@ -211,12 +192,9 @@ do
         echo ""
         sudo chage -l $userNome
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
-        echo ".."
-        sleep 1
-        echo "."
+        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
@@ -224,7 +202,7 @@ do
         echo "Digite o nome do usuário que deseja definir data de expiração da conta."
         read userNome
         echo ""
-        echo "Digite a data de expiração no seguinte formato: AAAA/MM/DD"
+        echo "Digite a data de expiração no seguinte formato: AAAA/MM/DD."
         read expira
         # dia=$(date +%d)
         # expira=$(date +%Y/%m)/0$((++DIA))
@@ -232,34 +210,13 @@ do
         echo ""
         sudo chage -l $userNome
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal...\033[01;37m"
+        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal!\033[01;37m"
-        echo ".."
-        sleep 1
-        echo "."
+        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     12)
-        echo "Digite o nome do novo usuário:"
-        read userNome
-        useradd $userNome
-        passwd -e $userNome
-        chage -M 60 $userNome
-
-        echo "Insira a data de expiração dos usuários (AA-MM-DD)"
-        read expiracao
-        
-
-
-        echo -e "\033[01;31m nova\033[01;37m!"
-        sleep 5
-        clear;
-        exit;
-    echo "-----------------------------------------------------------------------"
-    ;;
-    13)
         echo ""
         echo -e "\033[01;31mSaindo...\033[01;37m"
         sleep 2
@@ -272,6 +229,5 @@ do
     echo "Opção inválida!"
     esac
 done
-
 }
 menu
