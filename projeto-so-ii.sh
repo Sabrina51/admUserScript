@@ -48,10 +48,10 @@ do
     case "$option" in
     1)
         echo "Digite o nome do novo usuário:"
-        read userNome
-        useradd $userNome
+        read nome_usuario
+        useradd $nome_usuario
         echo ""
-        id $userNome
+        id $nome_usuario
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
@@ -61,8 +61,8 @@ do
     ;;
     2)
         echo "Digite o nome do usuário que deseja definir uma senha:"
-        read userNome
-        passwd $userNome
+        read nome_usuario
+        passwd $nome_usuario
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
@@ -72,8 +72,8 @@ do
     ;;
     3)
         echo "Digite o nome do usuário que deseja desabilitar:"
-        read userNome
-        usermod -L $userNome
+        read nome_usuario
+        usermod -L $nome_usuario
         echo ""
         echo "-----------------------------------------------------------------------"
         echo "Usuários ativos no sistema:"
@@ -88,8 +88,8 @@ do
     ;;
     4)
         echo "Digite o nome do usuário que deseja habilitar:"
-        read userNome
-        usermod -U $userNome
+        read nome_usuario
+        usermod -U $nome_usuario
         echo ""
         echo "-----------------------------------------------------------------------"
         echo "Usuários ativos no sistema:"
@@ -105,13 +105,13 @@ do
     5)
         echo "Digite o nome do usuário que deseja adicionar nos grupos: audio,"
         echo "video e scanner."
-        read userNome
-        usermod -G audio,video,scanner $userNome
+        read nome_usuario
+        usermod -G audio,video,scanner $nome_usuario
         echo ""
         echo "-----------------------------------------------------------------------"
         echo "Grupos atuais do usuário"
         echo "-----------------------------------------------------------------------"
-        groups $userNome
+        groups $nome_usuario
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
@@ -119,11 +119,11 @@ do
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
-     6)
+    6)
         echo "Digite o nome do grupo que deseja criar"
         read grupo
         echo ""
-        addgroup $grupo
+        addgroup $nome_grupo
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
@@ -133,20 +133,20 @@ do
     ;;
     7)
         echo "Digite o nome do usuário que deseja inserir a um novo grupo"
-        read userNome
+        read nome_usuario
         echo ""
         echo "Digite o nome do grupo ou dos grupos que deseja inserir o usuário"
         echo "(ex: grupo ou grupo1,grupo2)"
-        read grupo
+        read nome_grupo
         echo ""
         #usermod -G <grupo> <usuario> para adidionar novo grupo e manter os outros
-        usermod -G $grupo $userNome
-        # gpasswd -a $userNome $grupo
+        usermod -G $nome_grupo $nome_usuario
+        # gpasswd -a $nome_usuario $grupo
         echo ""
         echo "-----------------------------------------------------------------------"
         echo "Grupos atuais do usuário"
         echo "-----------------------------------------------------------------------"
-        groups $userNome
+        groups $nome_usuario
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
@@ -156,17 +156,17 @@ do
     ;;
     8)
         echo "Digite o nome do usuário que deseja remover de algum grupo"
-        read userNome
+        read nome_usuario
         echo ""
         echo "Digite o nome do grupo"
-        read grupo
+        read nome_grupo
         echo ""
-        gpasswd -d $userNome $grupo
+        gpasswd -d $nome_usuario $nome_grupo
         echo ""
         echo "-----------------------------------------------------------------------"
         echo "Grupos atuais do usuário"
         echo "-----------------------------------------------------------------------"
-        groups $userNome
+        groups $nome_usuario
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
@@ -176,10 +176,10 @@ do
     ;;
     9)
         echo "Digite o nome do usuário para definir expiração de senha no próximo login"
-        read userNome
-        passwd --expire $userNome
+        read nome_usuario
+        passwd --expire $nome_usuario
         echo ""
-        sudo chage -l $userNome
+        chage -l $nome_usuario
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
@@ -189,10 +189,10 @@ do
     ;;
     10)
         echo "Digite o nome do usuário para definir expiração a cada 30 dias"
-        read userNome
-        chage -M 30 $userNome
+        read nome_usuario
+        chage -M 30 $nome_usuario
         echo ""
-        sudo chage -l $userNome
+        chage -l $nome_usuario
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
@@ -202,15 +202,15 @@ do
     ;;
     11)
         echo "Digite o nome do usuário que deseja definir data de expiração da conta."
-        read userNome
+        read nome_usuario
         echo ""
         echo "Digite a data de expiração no seguinte formato: AAAA/MM/DD."
         read expira
         # dia=$(date +%d)
         # expira=$(date +%Y/%m)/0$((++DIA))
-        chage -E $expira $userNome
+        chage -E $expira $nome_usuario
         echo ""
-        sudo chage -l $userNome
+        chage -l $nome_usuario
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
