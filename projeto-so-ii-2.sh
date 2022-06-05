@@ -52,28 +52,41 @@ do
                 usuario_definido=$nome_usuario_perm$count
 
                 echo -e "\033[01;32mCriando usuário: [$usuario_definido]...\033[01;37m"
-                sleep 1
 
                 useradd $usuario_definido -p $(openssl passwd -1 $usuario_definido)
                 id $usuario_definido
-                egrep [1][0-9]{3} /etc/passwd | cut -d: -f1
+                # egrep [1][0-9]{3} /etc/passwd | cut -d: -f1
+                # sleep 1
                 echo ""
 
                 echo -e "\033[01;32mConfigurando senha do usuário: [$usuario_definido]...\033[01;37m"
-                sleep 1
                 
                 passwd --expire $usuario_definido
                 chage -M 60 $usuario_definido
+                echo ""
                 chage -l $usuario_definido
+                # sleep 1
                 echo ""
 
-                echo -e "\033[01;32mConfigurando expiração de conta do usuário: [$usuario_definido]...\033[01;37m"
-                sleep 1
-                chage -l $usuario_definido
-
+                echo -e "\033[01;32mConfigurando diretório do usuário: [$usuario_definido]...\033[01;37m"
+                echo -e "\033[01;36mCriando diretório home...\033[01;37m"
+                mkdir /home/$usuario_definido
+                chown $usuario_definido:$usuario_definido /home/$usuario_definido
+                # sleep 1
                 echo ""
 
-                echo -e "\033[01;36mUsuario $usuario_definido finalizado.\033[01;37m"
+                echo -e "\033[01;32mConfigurando grupos do usuário: [$usuario_definido]...\033[01;37m"
+                echo -e "\033[01;36mDefinindo grupos secundários..\033[01;37m"
+                sudo usermod -aG audio,video,storage,scanner,users $usuario_definido
+                if [ $? -gt 0 ]
+                then
+                    addgroup storage
+                    usermod -aG audio,video,storage,scanner,users $usuario_definido
+                fi
+                groups $usuario_definido
+
+                echo ""
+                echo -e "\033[01;32mUsuario $usuario_definido finalizado!\033[01;37m"
 
                 echo "-----------------------------------------------------------------------"
                 echo ""
@@ -97,7 +110,7 @@ do
                 useradd $usuario_definido -p $(openssl passwd -1 $usuario_definido)
                 id $usuario_definido
                 # egrep [1][0-9]{3} /etc/passwd | cut -d: -f1
-                sleep 1
+                # sleep 1
                 echo ""
 
                 echo -e "\033[01;32mConfigurando senha do usuário: [$usuario_definido]...\033[01;37m"
@@ -107,7 +120,7 @@ do
                 chage -W 15 $usuario_definido
                 echo ""
                 chage -l $usuario_definido
-                sleep 1
+                # sleep 1
                 echo ""
 
                 echo -e "\033[01;32mConfigurando expiração de conta do usuário: [$usuario_definido]...\033[01;37m"
@@ -119,27 +132,34 @@ do
                 chage -E $expira $usuario_definido
                 echo ""
                 chage -l $usuario_definido
-                sleep 1
+                # sleep 1
 
                 echo -e "\033[01;32mConfigurando diretório do usuário: [$usuario_definido]...\033[01;37m"
                 echo -e "\033[01;36mCriando diretório home...\033[01;37m"
                 mkdir /home/$usuario_definido
                 chown $usuario_definido:$usuario_definido /home/$usuario_definido
-                sleep 1
+                # sleep 1
 
                 echo -e "\033[01;36mCriando diretório /etc/temp_skel/...\033[01;37m"
                 #config do skel
                 mkdir /etc/temp_skel
-                cp -av /etc/skel/ /etc/temp_skel
-                # cp -av /etc/skel/\.[a-zA-Z]* /etc/temp_skel
+                if [ $? -eq 0 ]
+                then
+                    mkdir /etc/temp_skel
+                    echo ""
+                else
+                    echo ""
+                fi
+                cp -av /etc/skel/* /etc/temp_skel
+                cp -av /etc/skel/\.[a-zA-Z]* /etc/temp_skel
                 #--------------------------------------------
-                sleep 1
+                # sleep 1
 
                 echo -e "\033[01;36mCopiando arquivos /etc/temp_skel/ para pasta /home/$usuario_definido...\033[01;37m"
                 #config do skel
-                cp -av /etc/temp_skel/ /home/$usuario_definido
-                # cp -av /etc/temp_skel/\.[a-zA-Z]* /home/$usuario_definido
-                sleep 1
+                cp -av /etc/temp_skel/* /home/$usuario_definido
+                cp -av /etc/temp_skel/\.[a-zA-Z]* /home/$usuario_definido
+                # sleep 1
 
                 # chown -R $usuario_definido /home/$usuario_definido
                 # sudo grep -E '/home/$nome_usuario' /etc/passwd
@@ -148,6 +168,11 @@ do
                 echo -e "\033[01;32mConfigurando grupos do usuário: [$usuario_definido]...\033[01;37m"
                 echo -e "\033[01;36mDefinindo grupo primário..\033[01;37m"
                 usermod -g users $usuario_definido
+                if [ $? -gt 0 ]
+                then
+                    addgroup users
+                    usermod -g users $usuario_definido
+                fi
 
                 echo -e "\033[01;36mDefinindo grupos secundários..\033[01;37m"
                 usermod -aG audio,video $usuario_definido
