@@ -157,12 +157,8 @@ do
                 sleep 1
 
                 echo -e "\033[01;36mCopiando arquivos /etc/temp_skel/ para pasta /home/$usuario_definido...\033[01;37m"
-                #config do skel
                 cp -av /etc/temp_skel/\.[a-zA-Z]* /home/$usuario_definido
                 sleep 1
-
-                # chown -R $usuario_definido /home/$usuario_definido
-                # sudo grep -E '/home/$nome_usuario' /etc/passwd
                 # useradd -k /etc/temp_skel
                 echo ""
 
