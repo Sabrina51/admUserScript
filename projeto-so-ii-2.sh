@@ -82,6 +82,10 @@ do
                     addgroup users
                     usermod -aG audio,video,storage,scanner,users $usuario_definido_perm
                 fi
+
+                echo "-----------------------------------------------------------------------"
+                echo "Grupos atuais do usuário"
+                echo "-----------------------------------------------------------------------"
                 groups $usuario_definido_perm
                 echo ""
 
@@ -132,7 +136,7 @@ do
                 # hoje=$(date +%Y/%m/%d)
                 # read expira
                 expira=2025/02/02
-                echo -e "\033[01;36mConfigudando data de expiração para $expira...\033[01;37m"
+                echo -e "Data definida para expiração de conta: \033[01;31m$expira\033[01;37m"
                 chage -E $expira $usuario_definido
                 chage -l $usuario_definido
                 echo ""
@@ -173,6 +177,10 @@ do
 
                 echo -e "\033[01;36mDefinindo grupos secundários..\033[01;37m"
                 usermod -aG audio,video $usuario_definido
+
+                echo "-----------------------------------------------------------------------"
+                echo "Grupos atuais do usuário"
+                echo "-----------------------------------------------------------------------"
                 groups $usuario_definido
 
                 echo ""
@@ -184,6 +192,8 @@ do
             echo -e "\033[01;35mCriação do(s) usuário(s) temporário(s) concluida!\033[01;37m"
             echo "Aperte qualquer tecla para continuar..."
             read
+            echo ""
+            echo ""
         fi
 
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
