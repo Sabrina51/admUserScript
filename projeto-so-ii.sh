@@ -33,7 +33,7 @@ do
     echo ""
     echo "10 - [Forçar usuário a trocar a senha de 30 em 30 dias]"
     echo ""
-    echo "11 - [Forçar usuário a trocar a senha no próximo dia]"
+    echo "11 - [Definir expiração data para expiração de conta]"
     echo ""
     echo "12 - [Exit]"
     echo ""
@@ -56,7 +56,6 @@ do
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
-        sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     2)
@@ -67,7 +66,6 @@ do
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
-        sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     3)
@@ -83,7 +81,6 @@ do
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
-        sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     4)
@@ -99,7 +96,6 @@ do
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
-        sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     5)
@@ -116,19 +112,17 @@ do
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
-        sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     6)
         echo "Digite o nome do grupo que deseja criar"
-        read grupo
+        read nome_grupo
         echo ""
         addgroup $nome_grupo
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
-        sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     7)
@@ -139,7 +133,6 @@ do
         echo "(ex: grupo ou grupo1,grupo2)"
         read nome_grupo
         echo ""
-        #usermod -G <grupo> <usuario> para adidionar novo grupo e manter os outros
         usermod -G $nome_grupo $nome_usuario
         # gpasswd -a $nome_usuario $grupo
         echo ""
@@ -151,7 +144,6 @@ do
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
-        sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     8)
@@ -171,7 +163,6 @@ do
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
-        sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     9)
@@ -184,7 +175,6 @@ do
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
-        sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     10)
@@ -197,25 +187,26 @@ do
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
-        sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     11)
         echo "Digite o nome do usuário que deseja definir data de expiração da conta."
         read nome_usuario
         echo ""
-        echo "Digite a data de expiração no seguinte formato: AAAA/MM/DD."
-        read expira
-        # dia=$(date +%d)
-        # expira=$(date +%Y/%m)/0$((++DIA))
+        #configura com a entrada do usuario
+        # echo "Digite a data de expiração no seguinte formato: AAAA/MM/DD."
+        # read expira
+        #--------------------------------------------------------------------
+        #configura para o dia de amanha a expiracao
+        expira=$(date -d "+1 days" '+%Y/%m/%d')
         chage -E $expira $nome_usuario
+        echo -e "Data definida para expiração de conta: \033[01;31m$expira\033[01;37m"
         echo ""
         chage -l $nome_usuario
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
-        sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     12)
