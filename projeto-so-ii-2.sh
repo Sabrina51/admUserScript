@@ -70,6 +70,8 @@ do
                 echo -e "\033[01;36mCriando diretório home...\033[01;37m"
                 mkdir /home/$usuario_definido_perm
                 chown $usuario_definido_perm:$usuario_definido_perm /home/$usuario_definido_perm
+                echo -e "\033[01;36mDefinindo permições...\033[01;37m"
+                sudo chmod 700 -R /home/$usuario_definido_perm
                 sleep 1
                 echo ""
 
@@ -82,14 +84,13 @@ do
                     addgroup users
                     usermod -aG audio,video,storage,scanner,users $usuario_definido_perm
                 fi
-
-                echo "-----------------------------------------------------------------------"
-                echo "Grupos atuais do usuário"
-                echo "-----------------------------------------------------------------------"
-                groups $usuario_definido_perm
                 echo ""
+                echo -e "\033[01;36mGrupos atuais do usuário:\033[01;37m"
+                groups $usuario_definido_perm
 
-                echo -e "\033[01;32mUsuario $usuario_definido_perm finalizado!\033[01;37m"
+                echo ""
+                echo ""
+                echo -e "\033[01;33mUsuario $usuario_definido_perm finalizado!\033[01;37m"
 
                 echo "-----------------------------------------------------------------------"
                 echo ""
@@ -98,8 +99,6 @@ do
             echo "Aperte qualquer tecla para continuar..."
             read
         fi
-
-
 
         if test $quant_usuario_temp -gt 0
         then
@@ -138,7 +137,6 @@ do
                 expira=2025/02/02
                 echo -e "Data definida para expiração de conta: \033[01;31m$expira\033[01;37m"
                 chage -E $expira $usuario_definido
-                chage -l $usuario_definido
                 echo ""
                 sleep 1
 
@@ -146,6 +144,8 @@ do
                 echo -e "\033[01;36mCriando diretório home...\033[01;37m"
                 mkdir /home/$usuario_definido
                 chown $usuario_definido:$usuario_definido /home/$usuario_definido
+                echo -e "\033[01;36mDefinindo permições...\033[01;37m"
+                sudo chmod 700 -R /home/$usuario_definido
                 sleep 1
 
                 echo -e "\033[01;36mCriando diretório /etc/temp_skel/...\033[01;37m"
@@ -174,17 +174,15 @@ do
                     addgroup users
                     usermod -g users $usuario_definido
                 fi
-
                 echo -e "\033[01;36mDefinindo grupos secundários..\033[01;37m"
                 usermod -aG audio,video $usuario_definido
-
-                echo "-----------------------------------------------------------------------"
-                echo "Grupos atuais do usuário"
-                echo "-----------------------------------------------------------------------"
+                echo ""
+                echo -e "\033[01;36mGrupos atuais do usuário:\033[01;37m"
                 groups $usuario_definido
 
                 echo ""
-                echo -e "\033[01;32mUsuario $usuario_definido finalizado!\033[01;37m"
+                echo ""
+                echo -e "\033[01;33mUsuario $usuario_definido finalizado!\033[01;37m"
 
                 echo "-----------------------------------------------------------------------"
                 echo ""
@@ -224,6 +222,14 @@ do
         read
         echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
         sleep 1
+    echo "-----------------------------------------------------------------------"
+    ;;
+    4)
+        echo ""
+        echo -e "\033[01;31mSaindo...\033[01;37m"
+        sleep 2
+        clear;
+        exit;
     echo "-----------------------------------------------------------------------"
     ;;
 

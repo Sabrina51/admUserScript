@@ -49,9 +49,26 @@ do
     1)
         echo "Digite o nome do novo usuário:"
         read nome_usuario
-        useradd $nome_usuario
         echo ""
+        echo -e "\033[01;32mCriando usuário\033[01;37m"
+        useradd $nome_usuario
         id $nome_usuario
+        echo ""
+
+        echo -e "\033[01;32mConfigurando diretório do usuário\033[01;37m"
+        echo -e "\033[01;36mCriando diretório home...\033[01;37m"
+        mkdir /home/default
+        chown $nome_usuario:$nome_usuario /home/default
+        echo ""
+
+        echo -e "\033[01;32mConfigurando grupos do usuário\033[01;37m"
+        usermod -g users $nome_usuario
+        if [ $? -gt 0 ]
+        then
+            addgroup users
+            usermod -g users $nome_usuario
+        fi
+        groups $nome_usuario
         echo ""
         echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
         read
