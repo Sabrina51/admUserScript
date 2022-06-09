@@ -56,12 +56,13 @@ do
         echo ""
 
         echo -e "\e[32mConfigurando diretório do usuário\e[0m"
-        echo -e "\e[36mCriando diretório home...\e[0m"
+        echo -e "\e[36mCriando diretório /home/default...\e[0m"
         mkdir /home/default
         chown $nome_usuario:$nome_usuario /home/default
+        # sudo chmod 700 -R /home/default
         echo ""
 
-        echo -e "\e[32mConfigurando grupos do usuário\e[0m"
+        echo -e "\e[32mConfigurando grupo do usuário\e[0m"
         usermod -g users $nome_usuario
         if [ $? -gt 0 ]
         then

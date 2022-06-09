@@ -51,14 +51,15 @@ do
             for count in $(seq 1 $quant_usuario_perm); do
                 usuario_definido_perm=$nome_usuario_perm$count
 
-                echo -e "\e[32mCriando usuário: [$usuario_definido_perm]...\e[0m"
-                useradd $usuario_definido_perm -p $(openssl passwd -1 $usuario_definido_perm)
+                echo -e "\e[1;32mCriando usuário: [$usuario_definido_perm]\e[0m"
+                useradd -m -k /etc/skel $usuario_definido_perm -p $(openssl passwd -1 $usuario_definido_perm)
+
                 id $usuario_definido_perm
                 # egrep [1][0-9]{3} /etc/passwd | cut -d: -f1
                 sleep 1
                 echo ""
 
-                echo -e "\e[32mConfigurando senha do usuário: [$usuario_definido_perm]...\e[0m"
+                echo -e "\e[1;32mConfigurando senha do usuário: [$usuario_definido_perm]\e[0m"
                 passwd --expire $usuario_definido_perm
                 chage -M 60 $usuario_definido_perm
                 echo ""
@@ -66,16 +67,13 @@ do
                 sleep 1
                 echo ""
 
-                echo -e "\e[32mConfigurando diretório do usuário: [$usuario_definido_perm]...\e[0m"
-                echo -e "\e[36mCriando diretório home...\e[0m"
-                mkdir /home/$usuario_definido_perm
-                chown $usuario_definido_perm:$usuario_definido_perm /home/$usuario_definido_perm
+                echo -e "\e[1;32mConfigurando diretório do usuário: [$usuario_definido_perm]\e[0m"
                 echo -e "\e[36mDefinindo permições...\e[0m"
                 sudo chmod 700 -R /home/$usuario_definido_perm
                 sleep 1
                 echo ""
 
-                echo -e "\e[32mConfigurando grupos do usuário: [$usuario_definido_perm]...\e[0m"
+                echo -e "\e[1;32mConfigurando grupos do usuário: [$usuario_definido_perm]\e[0m"
                 echo -e "\e[36mDefinindo grupos secundários..\e[0m"
                 sudo usermod -aG audio,video,storage,scanner,users $usuario_definido_perm
                 if [ $? -gt 0 ]
@@ -90,7 +88,7 @@ do
 
                 echo ""
                 echo ""
-                echo -e "\e[33mUsuario $usuario_definido_perm finalizado!\e[0m"
+                echo -e "Usuario \e[1;32m[$usuario_definido_perm]\e[0m finalizado!"
 
                 echo "-----------------------------------------------------------------------"
                 echo ""
@@ -112,44 +110,9 @@ do
             for count in $(seq 1 $quant_usuario_temp); do
                 usuario_definido=$nome_usuario_temp$count
 
-                echo -e "\e[32mCriando usuário: [$usuario_definido]...\e[0m"
+                echo -e "\e[1;32mCriando usuário: [$usuario_definido]\e[0m"
+                echo -e "\e[36mDefinindo skel...\e[0m"
 
-                useradd $usuario_definido -p $(openssl passwd -1 $usuario_definido)
-                id $usuario_definido
-                # egrep [1][0-9]{3} /etc/passwd | cut -d: -f1
-                sleep 1
-                echo ""
-
-                echo -e "\e[32mConfigurando senha do usuário: [$usuario_definido]...\e[0m"
-                
-                passwd --expire $usuario_definido
-                chage -M 60 $usuario_definido
-                chage -W 15 $usuario_definido
-                echo ""
-                chage -l $usuario_definido
-                sleep 1
-                echo ""
-
-                echo -e "\e[32mConfigurando expiração de conta do usuário: [$usuario_definido]...\e[0m"
-                # echo "Defina a data de expiração das contas temporário no seguinte formato: AAAA/MM/DD. "
-                # hoje=$(date +%Y/%m/%d)
-                # read expira
-                expira=2025/02/02
-                echo -e "Data definida para expiração de conta: \e[31m$expira\e[0m"
-                chage -E $expira $usuario_definido
-                echo ""
-                sleep 1
-
-                echo -e "\e[32mConfigurando diretório do usuário: [$usuario_definido]...\e[0m"
-                echo -e "\e[36mCriando diretório home...\e[0m"
-                mkdir /home/$usuario_definido
-                chown $usuario_definido:$usuario_definido /home/$usuario_definido
-                echo -e "\e[36mDefinindo permições...\e[0m"
-                sudo chmod 700 -R /home/$usuario_definido
-                sleep 1
-
-                echo -e "\e[36mCriando diretório /etc/temp_skel/...\e[0m"
-                #config do skel
                 mkdir /etc/temp_skel
                 if [ $? -eq 0 ]
                 then
@@ -157,16 +120,45 @@ do
                 else 
                     echo "Seguindo..."
                 fi
-                #--------------------------------------------
-                sleep 1
-
-                echo -e "\e[36mCopiando arquivos /etc/temp_skel/ para pasta /home/$usuario_definido...\e[0m"
-                cp -av /etc/temp_skel/\.[a-zA-Z]* /home/$usuario_definido
-                sleep 1
-                # useradd -k /etc/temp_skel
                 echo ""
 
-                echo -e "\e[32mConfigurando grupos do usuário: [$usuario_definido]...\e[0m"
+                echo -e "\e[36mDefinido nome, diretório e senha...\e[0m"
+                useradd -m -k /etc/temp_skel $usuario_definido -p $(openssl passwd -1 $usuario_definido)
+                id $usuario_definido
+                sleep 1
+                echo ""
+                
+                echo -e "\e[1;32mConfigurando senha do usuário: [$usuario_definido]\e[0m"
+                echo -e "\e[36mDefinido parâmetros para próxima troca de senha...\e[0m"
+                chage -M 60 $usuario_definido
+
+                echo -e "\e[36mDefinido parâmetros para aviso de troca de senha...\e[0m"
+                chage -W 15 $usuario_definido
+
+                echo -e "\e[36mDefinido parâmetros para expiração de senha...\e[0m"
+                passwd --expire $usuario_definido
+                echo ""
+                # echo "Defina a data de expiração das contas temporário no seguinte formato: AAAA/MM/DD. "
+                # hoje=$(date +%Y/%m/%d)
+                # read expira
+                expira=2025/02/02
+                echo -e "\e[36mDefinido data de expiração de conta do usuário...\e[0m"
+                echo -e "Data definida para expiração de conta: \e[31m$expira\e[0m"
+                chage -E $expira $usuario_definido
+
+                echo ""
+                chage -l $usuario_definido
+
+                sleep 1
+                echo ""
+
+                echo -e "\e[1;32mConfigurando diretório do usuário: [$usuario_definido]\e[0m"
+                echo -e "\e[36mDefinindo permições...\e[0m"
+                sudo chmod 700 -R /home/$usuario_definido
+                sleep 1
+                echo ""
+
+                echo -e "\e[1;32mConfigurando grupos do usuário: [$usuario_definido]\e[0m"
                 echo -e "\e[36mDefinindo grupo primário..\e[0m"
                 usermod -g users $usuario_definido
                 if [ $? -gt 0 ]
@@ -182,7 +174,7 @@ do
 
                 echo ""
                 echo ""
-                echo -e "\e[33mUsuario $usuario_definido finalizado!\e[0m"
+                echo -e "Usuario \e[1;32m[$usuario_definido]\e[0m finalizado!"
 
                 echo "-----------------------------------------------------------------------"
                 echo ""
@@ -190,13 +182,10 @@ do
             echo -e "\e[35mCriação do(s) usuário(s) temporário(s) concluida!\e[0m"
             echo "Aperte qualquer tecla para continuar..."
             read
-            echo ""
-            echo ""
         fi
 
         echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\e[36mVoltando para o menu principal...\e[0m"
         sleep 1
 
     echo "-----------------------------------------------------------------------"
@@ -230,7 +219,7 @@ do
     ;;
     4)
         echo ""
-        echo -e "\e[31mSaindo...\e[0m"
+        echo -e "\e[1;31mSaindo...\e[0m"
         sleep 2
         clear;
         exit;
