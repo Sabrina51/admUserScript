@@ -8,7 +8,7 @@ do
 
     echo "-----------------------------------------------------------------------"
     echo ""
-    echo -e "\033[01;33m \t\t Bem-vindo ao gerenciador de usuários \t\t \033[01;37m"
+    echo -e "\e[1;33m \t\t Bem-vindo ao gerenciador de usuários \t\t \e[0m"
     echo ""
     echo "-----------------------------------------------------------------------"
     
@@ -42,7 +42,7 @@ do
     echo "Escolha uma opção:"
     read option
     clear
-    echo -e "\033[01;33mOpção escolhida: $option \033[01;37m"
+    echo -e "\e[33mOpção escolhida: $option \e[0m"
     echo "-----------------------------------------------------------------------"
 
     case "$option" in
@@ -50,18 +50,18 @@ do
         echo "Digite o nome do novo usuário:"
         read nome_usuario
         echo ""
-        echo -e "\033[01;32mCriando usuário\033[01;37m"
+        echo -e "\e[32mCriando usuário\e[0m"
         useradd $nome_usuario
         id $nome_usuario
         echo ""
 
-        echo -e "\033[01;32mConfigurando diretório do usuário\033[01;37m"
-        echo -e "\033[01;36mCriando diretório home...\033[01;37m"
+        echo -e "\e[32mConfigurando diretório do usuário\e[0m"
+        echo -e "\e[36mCriando diretório home...\e[0m"
         mkdir /home/default
         chown $nome_usuario:$nome_usuario /home/default
         echo ""
 
-        echo -e "\033[01;32mConfigurando grupos do usuário\033[01;37m"
+        echo -e "\e[32mConfigurando grupos do usuário\e[0m"
         usermod -g users $nome_usuario
         if [ $? -gt 0 ]
         then
@@ -70,9 +70,9 @@ do
         fi
         groups $nome_usuario
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
+        echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
     2)
@@ -80,9 +80,9 @@ do
         read nome_usuario
         passwd $nome_usuario
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
+        echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
     3)
@@ -95,9 +95,9 @@ do
         echo "-----------------------------------------------------------------------"
         passwd -S -a|awk '$2 ~ /P/ {print $q}'
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
+        echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
     4)
@@ -110,9 +110,9 @@ do
         echo "-----------------------------------------------------------------------"
         passwd -S -a|awk '$2 ~ /P/ {print $q}'
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
+        echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
     5)
@@ -126,9 +126,9 @@ do
         echo "-----------------------------------------------------------------------"
         groups $nome_usuario
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
+        echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
     6)
@@ -137,9 +137,9 @@ do
         echo ""
         addgroup $nome_grupo
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
+        echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
     7)
@@ -158,9 +158,9 @@ do
         echo "-----------------------------------------------------------------------"
         groups $nome_usuario
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
+        echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
     8)
@@ -177,9 +177,9 @@ do
         echo "-----------------------------------------------------------------------"
         groups $nome_usuario
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
+        echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
     9)
@@ -189,9 +189,9 @@ do
         echo ""
         chage -l $nome_usuario
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
+        echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
     10)
@@ -201,9 +201,9 @@ do
         echo ""
         chage -l $nome_usuario
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
+        echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
     11)
@@ -217,18 +217,18 @@ do
         #configura para o dia de amanha a expiracao
         expira=$(date -d "+1 days" '+%Y/%m/%d')
         chage -E $expira $nome_usuario
-        echo -e "Data definida para expiração de conta: \033[01;31m$expira\033[01;37m"
+        echo -e "Data definida para expiração de conta: \e[31m$expira\e[0m"
         echo ""
         chage -l $nome_usuario
         echo ""
-        echo -e "\033[01;33mDigite qualquer tecla para voltar para o menu principal!\033[01;37m"
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\033[01;36mVoltando para o menu principal...\033[01;37m"
+        echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
     12)
         echo ""
-        echo -e "\033[01;31mSaindo...\033[01;37m"
+        echo -e "\e[31mSaindo...\e[0m"
         sleep 2
         clear;
         exit;
