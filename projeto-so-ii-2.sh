@@ -191,29 +191,25 @@ do
     echo "-----------------------------------------------------------------------"
     ;;
     2)
-        # echo "Digite o nome do usuário que deseja definir uma senha:"
-        # hoje=$(date +%Y/%m/%d)
-        # echo $hoje
-        # echo $(date +%Y/%m/%d)
-        # echo ""
-        # echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
-        # read
-        # echo -e "\e[36mVoltando para o menu principal...\e[0m"
+        echo -e "\e[33mDesativando contas com mais de 120 dias sem uso\e[0m"
+        last -t '-120 days' | awk -F" " '{ print $1}' | sort | uniq | grep -v begins | xargs -I@ chage -l @
 
-
-        echo -e "\e[40mVoltando para o menu principal...\e[0m"
+        echo -e "\e[35mLimpeza concluida!\e[0m"
+        echo ""
+        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
     3)
-        echo "Digite o nome do usuário que deseja definir uma senha:"
-        read userNome
-        passwd $userNome
+         echo -e "\e[33mDesativando contas com mais de 120 dias sem uso\e[0m"
+        last -t '-120 days' | awk -F" " '{ print $1}' | sort | uniq | grep -v begins | xargs -I@ chage -l @
+        lastlog | grep 'nunca logou' | sort | uniq | awq -F: '{ print $7}' /etc/passwd | grep "/bin/sh" | sort | uniq | xargs -I@ chage -l @
+
+        echo -e "\e[35mLimpeza concluida!\e[0m"
         echo ""
         echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
         read
-        echo -e "\e[36mVoltando para o menu principal...\e[0m"
         sleep 1
     echo "-----------------------------------------------------------------------"
     ;;
