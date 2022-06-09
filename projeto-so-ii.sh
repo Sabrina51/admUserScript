@@ -23,19 +23,17 @@ do
     echo ""
     echo "5 - [Adicionar um usuário aos grupo: audio, video, scanner]"
     echo ""
-    echo "6 - [Criar um novo grupo]"
+    echo "6 - [Adicionar um usuário a um ou mais grupos]"
     echo ""
-    echo "7 - [Adicionar um usuário a um ou mais grupos]"
+    echo "7 - [Remover um usuário de um grupo]"
     echo ""
-    echo "8 - [Remover um usuário de um grupo]"
+    echo "8 - [Forçar usuário a trocar a senha no próximo login]"
     echo ""
-    echo "9 - [Forçar usuário a trocar a senha no próximo login]"
+    echo "9 - [Forçar usuário a trocar a senha de 30 em 30 dias]"
     echo ""
-    echo "10 - [Forçar usuário a trocar a senha de 30 em 30 dias]"
+    echo "10 - [Definir expiração data para expiração de conta]"
     echo ""
-    echo "11 - [Definir expiração data para expiração de conta]"
-    echo ""
-    echo "12 - [Exit]"
+    echo "11 - [Exit]"
     echo ""
     echo "-----------------------------------------------------------------------"
 
@@ -133,25 +131,19 @@ do
     echo "-----------------------------------------------------------------------"
     ;;
     6)
-        echo "Digite o nome do grupo que deseja criar"
-        read nome_grupo
-        echo ""
-        addgroup $nome_grupo
-        echo ""
-        echo -e "\e[33mDigite qualquer tecla para voltar para o menu principal!\e[0m"
-        read
-        echo -e "\e[36mVoltando para o menu principal...\e[0m"
-    echo "-----------------------------------------------------------------------"
-    ;;
-    7)
         echo "Digite o nome do usuário que deseja inserir a um novo grupo"
         read nome_usuario
         echo ""
-        echo "Digite o nome do grupo ou dos grupos que deseja inserir o usuário"
-        echo "(ex: grupo ou grupo1,grupo2)"
+        echo "Digite o nome do grupo que deseja inserir o usuário"
         read nome_grupo
         echo ""
-        usermod -G $nome_grupo $nome_usuario
+
+        usermod -aG $nome_grupo $nome_usuario
+        if [ $? -gt 0 ]
+        then
+            addgroup $nome_grupo
+            usermod -aG $nome_grupo $nome_usuario
+        fi
         # gpasswd -a $nome_usuario $grupo
         echo ""
         echo "-----------------------------------------------------------------------"
@@ -164,7 +156,7 @@ do
         echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
-    8)
+    7)
         echo "Digite o nome do usuário que deseja remover de algum grupo"
         read nome_usuario
         echo ""
@@ -183,7 +175,7 @@ do
         echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
-    9)
+    8)
         echo "Digite o nome do usuário para definir expiração de senha no próximo login"
         read nome_usuario
         passwd --expire $nome_usuario
@@ -195,7 +187,7 @@ do
         echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
-    10)
+    9)
         echo "Digite o nome do usuário para definir expiração a cada 30 dias"
         read nome_usuario
         chage -M 30 $nome_usuario
@@ -207,7 +199,7 @@ do
         echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
-    11)
+    10)
         echo "Digite o nome do usuário que deseja definir data de expiração da conta."
         read nome_usuario
         echo ""
@@ -227,8 +219,7 @@ do
         echo -e "\e[36mVoltando para o menu principal...\e[0m"
     echo "-----------------------------------------------------------------------"
     ;;
-    12)
-        echo ""
+    11)
         echo -e "\e[31mSaindo...\e[0m"
         sleep 2
         clear;
