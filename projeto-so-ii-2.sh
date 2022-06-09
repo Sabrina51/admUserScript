@@ -192,7 +192,8 @@ do
     ;;
     2)
         echo -e "\e[33mDesativando contas com mais de 120 dias sem uso\e[0m"
-        last -t '-120 days' | awk -F" " '{ print $1}' | sort | uniq | grep -v begins | xargs -I@ chage -l @
+        # last -t '-120 days' | awk -F" " '{ print $1}' | sort | uniq | grep -v begins | xargs -I@ chage -l @
+        last -t '-120 days' 
 
         echo -e "\e[35mLimpeza concluida!\e[0m"
         echo ""
@@ -204,7 +205,7 @@ do
     3)
          echo -e "\e[33mDesativando contas com mais de 120 dias sem uso\e[0m"
         last -t '-120 days' | awk -F" " '{ print $1}' | sort | uniq | grep -v begins | xargs -I@ chage -l @
-        lastlog | grep 'nunca logou' | sort | uniq | awq -F: '{ print $7}' /etc/passwd | grep "/bin/sh" | sort | uniq | xargs -I@ chage -l @
+        lastlog | grep 'nunca logou' | sort | uniq | awk -F: '{ print $7}' /etc/passwd | grep "/bin/sh" | sort | uniq | xargs -I@ chage -l @
 
         echo -e "\e[35mLimpeza concluida!\e[0m"
         echo ""
@@ -214,7 +215,6 @@ do
     echo "-----------------------------------------------------------------------"
     ;;
     4)
-        echo ""
         echo -e "\e[1;31mSaindo...\e[0m"
         sleep 2
         clear;

@@ -57,7 +57,6 @@ do
         echo -e "\e[36mCriando diretório /home/default...\e[0m"
         mkdir /home/default
         chown $nome_usuario:$nome_usuario /home/default
-        # sudo chmod 700 -R /home/default
         echo ""
 
         echo -e "\e[32mConfigurando grupo do usuário\e[0m"
