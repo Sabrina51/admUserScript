@@ -194,6 +194,7 @@ do
         echo -e "\e[33mDesativando contas com mais de 120 dias sem uso\e[0m"
         # last -t '-120 days' | awk -F" " '{ print $1}' | sort | uniq | grep -v begins | xargs -I@ chage -l @
         last -t '-120 days' 
+        #lslogins -u | awk -F" " '{print $0}'
 
         echo -e "\e[35mLimpeza concluida!\e[0m"
         echo ""
